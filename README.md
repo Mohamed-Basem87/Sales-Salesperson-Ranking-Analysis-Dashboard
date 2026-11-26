@@ -1,6 +1,6 @@
 # Sales & Salesperson Ranking Analysis Dashboard
 
-**Transforming raw operational data into a full star-schema BI model and an interactive Power BI dashboard that tracks revenue, orders and salesperson performance across three years.**
+**Transforming raw operational data into a star-schema BI model and an interactive Power BI dashboard that tracks revenue, orders and salesperson performance from January 2019 to March 2021.**
 
 ![Power BI](https://img.shields.io/badge/Power%20BI-Desktop-F2C811?logo=powerbi&logoColor=black) ![DAX](https://img.shields.io/badge/Language-DAX-7B7FDC) ![Status](https://img.shields.io/badge/Status-Complete-3FB58F) ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
@@ -8,9 +8,9 @@
 
 ## Project Overview
 
-This project turns a raw sales report into a business-intelligence engine. All preparation is handled in **Power Query**: header promotion, skipping report preamble rows, type casting, filtering blank product keys, cleaning duplicated dimensions, joining product-group image URLs and unpivoting the monthly budget workbook into a tidy Target table.
+It turns a raw sales report into a business-intelligence engine. All preparation is handled in **Power Query**: header promotion, skipping report preamble rows, type casting, filtering blank product keys, cleaning duplicated dimensions, joining product-group image URLs and unpivoting the monthly budget workbook into a tidy Target table.
 
-The normalized model uses a transactional `Sales` fact table with Product, Salesperson, Calendar and Target dimensions. DAX measures calculate revenue, distinct orders, average transaction price, target achievement, contribution share and a dynamic salesperson rank that powers a top-three podium and ranking table.
+The normalized model uses two fact tables (`Sales` and `Target`) and three dimension tables (`dProducts`, `dSalesperson` and `dcalendar`). DAX measures calculate revenue, distinct orders, average transaction price, target achievement, contribution share and a dynamic salesperson rank that powers a top-three podium and ranking table.
 
 A short portfolio-style write-up is available in [`docs/Sales_Ranking_Dashboard_Brief_Description.md`](docs/Sales_Ranking_Dashboard_Brief_Description.md).
 
@@ -67,7 +67,7 @@ SalesData.xlsx ──► Sales (fact) ──► dProducts
                                           │
                                    Key_Measure (DAX)
                                           │
-                                  5 report pages
+                                  3 visible pages + 2 hidden tooltips
 ```
 
 Power Query also standardizes several supervisor names (for example replacing Portuguese-language names with their localized equivalents), removes blank product keys, extracts salesperson IDs and deduplicates the salesperson dimension before loading.
@@ -126,10 +126,11 @@ Power Query also standardizes several supervisor names (for example replacing Po
 
 ## Key Findings
 
-- **$17.9M** in revenue analyzed across **52,560 orders** and three years; overall performance finished just above plan at **103.7% of target**.
+- **$17.9M** in revenue analyzed across **52,560 orders** from January 2019 to March 2021 (27 months); overall performance finished just above plan at **103.7% of target**.
 - **Wheat Flour** was the top revenue product group at **$4.47M**; Food accounted for **90.21% of orders** versus Drink at **9.79%**.
-- Channel mix: **Online 48.56% (~$9M)**, Distributor **34.05% (~$6M)** and Retail **17.39% (~$3M)**.
-- Revenue built through 2019, peaked in **late 2020 (Q3–Q4)** with the strongest month in **October 2020**, then declined in early 2021.
+- Channel mix: **Retail $8.70M (48.56%)**, **Distributor $6.10M (34.05%)** and **Online $3.11M (17.39%)**.
+- Revenue peaked in **Q4 2020 ($3.24M)**, after Q3 2020 ($2.88M), with **October 2020** the strongest month ($1.17M); the transaction data ends in March 2021.
+- The top **supervisor** was Diego Araujo at **$6.32M** (shown as Abdallah Mahmoud in the report after Power Query name standardization); the top **salesperson** was Carla Ferreira at **$4.71M**.
 - The `RANKX`-based salesperson ranking surfaces clear performance gaps and supports targeted coaching decisions without hard-coding any individual into the report.
 
 ---
